@@ -22,7 +22,7 @@ def load_trek_2005_robust_document(document_path):
                         document.append(line.strip())
     return documents
 
-def process_document(document, stopwords=False, min_length=3):
+def process_document(document, stopwords=False, min_length=2):
     """Returns a processed text document
 
     :param document: text document as a single string
@@ -42,6 +42,4 @@ def process_document(document, stopwords=False, min_length=3):
         if sentence:
             new_document.append(sentence)
     return new_document
-                
-x = load_trek_2005_robust_document("/home/kjros2/query_expansion/data/trek_2005_robust/documents/19981217_APW_ENG")
-print(process_document(x[0]))
+
