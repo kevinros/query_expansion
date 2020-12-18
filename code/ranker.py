@@ -33,3 +33,9 @@ class Ranker(object):
         new_total_length = (self.average_document_length * self.number_of_documents) + len(document_text)
         self.number_of_documents += 1
         self.average_document_length = new_total_length / self.number_of_documents
+    
+    def bm25(self, query, topn=10, k1=1.2, b=0.75):
+        """ Ranks documents against given query using BM25 method
+        query: string containing the user query
+        topn: int number of documents to be returned (default = 10)
+        k1: int parameter to control
