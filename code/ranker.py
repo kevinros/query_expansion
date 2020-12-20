@@ -56,7 +56,7 @@ class Ranker(object):
                 tf = self.TF_score_helper(word, doc_id)
                 idf = self.IDF_score_helper(word)
                 numerator = tf * (k1 + 1)
-                denominator = tf + (k1 * (1 - b + (b * (document_metadata[doc_id]['length'] / self.average_document_length))))
+                denominator = tf + (k1 * (1 - b + (b * (self.document_metadata[doc_id]['length'] / self.average_document_length))))
                 doc_score += idf * (numerator / denominator)
             rankings.append((doc_score,doc_id))
         rankings = sorted(rankings, key=lambda x: x[0], reverse=True)

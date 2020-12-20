@@ -13,8 +13,8 @@ def trek2corpus(trek_path):
     corpus = []
     for filename in os.listdir(trek_path):
         docs = preprocess.load_trek_2005_robust_document(trek_path + filename)
-        for doc in docs:
-            processed_doc = preprocess.process_document(doc)
+        for doc in docs.keys():
+            processed_doc = preprocess.process_document(docs[doc]) 
             corpus += processed_doc   
     return corpus
 
