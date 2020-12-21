@@ -425,7 +425,6 @@ no year is required.
 <top>
 
 <num> Number: 375
-
 <title> hydrogen energy
 
 <desc> Description:
@@ -939,9 +938,7 @@ for tax fraud are relevant.
 
 <top>
 <num> Number: 651
-
-<title>
-U.S. ethnic population
+<title> U.S. ethnic population
 
 <desc> Description:
 How is the ethnic make-up of the U.S. population changing?
@@ -954,9 +951,7 @@ population.
 
 <top>
 <num> Number: 658
-
-<title>
-teenage pregnancy
+<title> teenage pregnancy
 
 <desc> Description:
 Find documents that discuss teenage pregnancy in the United States:
@@ -972,9 +967,7 @@ Also relevant is information on teenage abortions.
 
 <top>
 <num> Number: 689
-
-<title>
-family-planning aid
+<title> family-planning aid
 
 <desc> Description:
 To which countries does the U.S. provide aid to support family planning,
