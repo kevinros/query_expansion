@@ -88,4 +88,3 @@ class Ranker(object):
         numerator = N - docs_containing_keyword + 0.5
         denominator = docs_containing_keyword + 0.5
         return max(0, math.log((numerator / denominator) + 1))
-
