@@ -55,8 +55,8 @@ def test_embedding(path_to_model,words):
 
 
 path_to_documents = "/home/kjros2/query_expansion/data/trek_2005_robust/documents/"
-corpus = trek2corpus(path_to_documents)
+#corpus = trek2corpus(path_to_documents)
 print('corpus made')
-train_embedding(corpus,"test",100,10,10,5,0,10) 
+#train_embedding(corpus,"full",100,10,10,5,0,100) 
 test_embedding('../models/test_100_10_10.txt',['kids','golf','and','man','woman'])
-                                                                                                                                                                                                            
+test_embedding('../models/full_100_10_10.txt',['kids','golf','and','man','woman'])                                                                                                                                                                                                             

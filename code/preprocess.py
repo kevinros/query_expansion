@@ -29,7 +29,7 @@ def load_trek_2005_robust_document(document_path):
                         document.append(line.strip())
     return documents
 
-def process_document(document, stopwords=False, min_length=2):
+def process_document(document, stopwords=False, min_length=1):
     """Returns a processed text document
 
     :param document: text document as a single string
@@ -50,3 +50,15 @@ def process_document(document, stopwords=False, min_length=2):
             new_document.append(sentence)
     return new_document
 
+def process_query(query, stopwords=False, min_length=1):
+    """
+    Returns a processed query, removes all non-alphanumeric
+
+    param query: str query
+    returns: str processed query
+    """
+    query = query.lower()
+    query = re.sub("[^a-zA-Z ]+", "", query).split(" ")
+    #query = [x for x in query if len(x) > min_length]
+    query = [word for word in query if len(word) > 1]
+    return query

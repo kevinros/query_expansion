@@ -3,6 +3,9 @@ import ranker as r
 import os
 import pickle
 import math
+import gensim
+from gensim.models import KeyedVectors
+
 
 def setup_ranker(path_to_documents, ranker_name):
     """
@@ -57,11 +60,14 @@ def load_trek_robust_scores(path_to_scores):
     return scores
 
 
-#path_to_documents = "/home/kjros2/query_expansion/data/trek_2005_robust/documents/"
-#ranker = setup_ranker(path_to_documents, "small_trek.p")
+path_to_documents = "/home/kjros2/query_expansion/data/trek_2005_robust/documents/"
+#ranker = setup_ranker(path_to_documents, "all_trek_documents.p")
 
-ranker = load_ranker("../rankers/small_trek.p")
+ranker = load_ranker("../rankers/all_trek_documents.p")
 print('loaded')
+print(ranker.average_document_length)
+print(ranker.number_of_documents)
+print(len(ranker.missing_text))
 
 path_to_topics = "/home/kjros2/query_expansion/data/trek_2005_robust/metadata/05.50.topics.txt"
 path_to_scores = "/home/kjros2/query_expansion/data/trek_2005_robust/metadata/TREC2005.qrels.txt"
@@ -111,11 +117,40 @@ def score_ndcg(scores):
     else:
         return dcg / idcg
 
+def score_percision(scores):
+    """
+    Calculates percision given list of scores:
+    scores: list of document scores
 
+    returns: int percision
+    """
+    percision = 0
+    for score in scores:
+        percision += score
+    return float(percision) / (len(scores) * 2) # Because score can be either 1 or 2
+
+def calculate_sim_distances(embedding_model, topic):
+    """
+    """
+    for i,w1 in enumerate(topic[0:-1]):
+        for w2 in topic[i+1:]:
+            try:
+                print(w1,w2,embedding_model.similarity(w1,w2))
+            except:
+                print('Not in model.')
+                   
+                
+
+path_to_model = '../models/full_100_10_10.txt'
+model = KeyedVectors.load_word2vec_format(path_to_model,binary=False) 
 
 for topic in all_topics.keys():
-    returned_docs = ranker.bm25(all_topics[topic].lower().split(" "))
+    processed_topic = preprocess.process_query(all_topics[topic])
+    returned_docs = ranker.bm25(processed_topic)
     returned_scores = returned_doc_scores(topic, returned_docs, all_scores)
-    print(all_topics[topic])
+    print(processed_topic)
     print(returned_scores)
     print(score_ndcg(returned_scores))
+    print(score_percision(returned_scores))
+    calculate_sim_distances(model, processed_topic)
+    print("=========================================================================================")

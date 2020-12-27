@@ -12,9 +12,9 @@ class Ranker(object):
         self.inverted_index = {}
         self.number_of_documents = 0
         self.average_document_length = 0
-        # need to store relevance scores for documents!
-
         self.document_metadata = {} # Contains document length
+        self.missing_text = []
+        self.total_length = 0
         
     def add_document(self, document_text, document_id):
         """ Adds a document to the inverted index, and updates the global variables
@@ -23,7 +23,9 @@ class Ranker(object):
 
         returns: nothing
         """
+        document_length = 0
         for sentence in document_text:
+            document_length += len(sentence)
             for word in sentence:
                 if word in self.inverted_index:
                     if document_id in self.inverted_index[word]:
@@ -34,12 +36,20 @@ class Ranker(object):
                     self.inverted_index[word] = {}
                     self.inverted_index[word][document_id] = 1
 
-        new_total_length = (self.average_document_length * self.number_of_documents) + len(document_text)
+        if document_length == 0:
+            self.missing_text.append(document_id)
+            return
+        if self.number_of_documents % 1000 == 0:
+            print(self.number_of_documents)
+            print(self.total_length)
+            print(self.average_document_length)
+
         self.document_metadata[document_id] = {}
-        self.document_metadata[document_id]['length'] = len(document_text)
+        self.document_metadata[document_id]['length'] = document_length
         self.number_of_documents += 1
-        self.average_document_length = new_total_length / self.number_of_documents
-    
+        self.total_length += document_length
+        self.average_document_length = self.total_length / self.number_of_documents
+          
     def bm25(self, query, topn=10, k1=1.2, b=0.75):
         """ Ranks documents against given query using BM25 method
         query: string containing the user query
